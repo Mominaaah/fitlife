@@ -25,25 +25,30 @@ class WorkoutService {
   }
 
   // Get user's workout history
-  Future<List<WorkoutSessionModel>> getUserWorkouts({int limit = 30}) async {
-    if (currentUserId == null) return [];
+// Get user's workout history - SIMPLIFIED (No index needed)
+Future<List<WorkoutSessionModel>> getUserWorkouts({int limit = 30}) async {
+  if (currentUserId == null) return [];
 
-    try {
-      final querySnapshot = await _firestore
-          .collection('workouts')
-          .where('userId', isEqualTo: currentUserId)
-          .orderBy('completedAt', descending: true)
-          .limit(limit)
-          .get();
+  try {
+    final querySnapshot = await _firestore
+        .collection('workouts')
+        .where('userId', isEqualTo: currentUserId)
+        .limit(limit)
+        .get();
 
-      return querySnapshot.docs
-          .map((doc) => WorkoutSessionModel.fromMap(doc.data()))
-          .toList();
-    } catch (e) {
-      print('❌ Error getting workouts: $e');
-      return [];
-    }
+    // Sort in memory instead of Firestore
+    final workouts = querySnapshot.docs
+        .map((doc) => WorkoutSessionModel.fromMap(doc.data()))
+        .toList();
+    
+    workouts.sort((a, b) => b.completedAt.compareTo(a.completedAt));
+
+    return workouts;
+  } catch (e) {
+    print('❌ Error getting workouts: $e');
+    return [];
   }
+}
 
   // Get workouts for specific date range
   Future<List<WorkoutSessionModel>> getWorkoutsByDateRange(

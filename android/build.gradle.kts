@@ -25,6 +25,6 @@ tasks.register<Delete>("clean") {
 buildscript {
     dependencies {
         // Add this line if not present
-        classpath 'com.google.gms:google-services:4.3.15'
+        classpath ("com.google.gms:google-services:4.3.15")
     }
 }

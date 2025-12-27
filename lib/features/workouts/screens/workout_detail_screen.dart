@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../models/workout_model.dart';
 import '../models/exercise_model.dart';
+import '../models/workout_session_model.dart';
+import '../services/workout_service.dart';
 import '../widgets/exercise_card.dart';
 import '../widgets/info_chip.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkoutDetailScreen extends StatelessWidget {
   final WorkoutModel workout;
@@ -118,9 +121,9 @@ class WorkoutDetailScreen extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => _completeWorkout(context, exercises),
                         child: const Text(
-                          'Start Workout',
+                          'Complete Workout',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -134,5 +137,76 @@ class WorkoutDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Save completed workout to Firebase
+  void _completeWorkout(BuildContext context, List<ExerciseModel> exercises) async {
+    final workoutService = WorkoutService();
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please login to save workouts'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    try {
+      // Show loading
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(color: AppColors.primaryOrange),
+        ),
+      );
+
+      // Create workout session
+      final session = WorkoutSessionModel(
+        id: '${currentUser.uid}_${DateTime.now().millisecondsSinceEpoch}',
+        userId: currentUser.uid,
+        workoutId: workout.id,
+        workoutName: workout.name,
+        duration: int.parse(workout.duration.split(' ')[0]), // Extract number from "45 min"
+        caloriesBurned: int.parse(workout.calories.split(' ')[0]), // Extract number from "350 kcal"
+        completedAt: DateTime.now(),
+        exercises: exercises.map((e) => ExerciseSessionModel(
+          name: e.name,
+          setsCompleted: int.parse(e.sets),
+          repsCompleted: int.tryParse(e.reps) ?? 0,
+        )).toList(),
+      );
+
+      // Save to Firebase
+      await workoutService.saveWorkoutSession(session);
+
+      // Close loading
+      Navigator.pop(context);
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Workout completed and saved!'),
+          backgroundColor: AppColors.success,
+        ),
+      );
+
+      // Go back
+      Navigator.pop(context);
+    } catch (e) {
+      // Close loading
+      Navigator.pop(context);
+
+      // Show error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
   }
 }

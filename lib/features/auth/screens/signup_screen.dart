@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../features/profile/services/user_service.dart';
 import '../../../shared/widgets/main_screen.dart';
 import '../widgets/custom_text_field.dart';
