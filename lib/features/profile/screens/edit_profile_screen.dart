@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../auth/widgets/custom_text_field.dart';
-import '../../../core/theme/app_theme.dart';
 import '../services/user_service.dart';
 
 class EditProfileScreen extends StatefulWidget {

@@ -6,6 +6,7 @@ import '../widgets/profile_menu_item.dart';
 import '../services/user_service.dart';
 import '../models/user_model.dart';
 import 'edit_profile_screen.dart';
+import 'goals_screen.dart';
 import 'my_progress_screen.dart';
 import 'health_data_screen.dart';
 import 'notifications_screen.dart';
@@ -154,6 +155,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _loadUserData();
                 },
               ),
+              ProfileMenuItem(
+                  icon: Icons.flag,
+                  label: 'My Goals',
+                  onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GoalsScreen()),
+                   );
+                },
+               ),
+              
               ProfileMenuItem(
                 icon: Icons.trending_up,
                 label: 'My Progress',
