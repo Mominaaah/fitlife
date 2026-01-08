@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text('Dashboard',
                                     style: Theme.of(context).textTheme.headlineLarge),
                                 const SizedBox(height: 4),
-                                Text('Welcome back, Momina Ramzan!',
+                                Text('Welcome back!',
                                     style: Theme.of(context).textTheme.bodyMedium),
                               ],
                             ),

@@ -95,7 +95,7 @@ dependencies {
 }
 */
 
-apply plugin: 'com.android.application'
+/* apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
@@ -105,7 +105,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.fitlife"
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
@@ -130,4 +130,37 @@ android {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.2.2')
     implementation 'com.google.firebase:firebase-auth'
+}
+*/
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
+android {
+    namespace "com.example.fitlife"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.fitlife"
+        minSdkVersion flutter.minSdkVersion
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
 }

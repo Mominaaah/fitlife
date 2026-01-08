@@ -1,6 +1,4 @@
-// ==============================================================
-// FILE: lib/main.dart - WORKING FOR WEB
-// ==============================================================
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/theme/app_theme.dart';
@@ -10,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   try {
-    // Firebase Web Configuration - GET FROM FIREBASE CONSOLE
+   
     await Firebase.initializeApp(
       options: const FirebaseOptions(
         apiKey: "AIzaSyC2WRSrNT_amxU0SECjNsGtO2bUX-W7LjI",
