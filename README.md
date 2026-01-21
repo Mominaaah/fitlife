@@ -5,8 +5,6 @@ The purpose of this project is to practice Flutter UI development, widget struct
 
 This project reflects my hands-on learning journey in mobile app development as a Computer Science student.
 
----
-
 ## 🚀 Features
 
 - Modern and clean fitness-focused UI
@@ -15,16 +13,12 @@ This project reflects my hands-on learning journey in mobile app development as 
 - Cross-platform support (Android, Web)
 - Firebase-ready configuration
 
----
-
 ## 🛠 Tech Stack
 
 - Flutter
 - Dart
 - Material UI
 - Firebase (planned)
-
----
 
 ## 📱 Supported Platforms
 
@@ -34,11 +28,6 @@ This project reflects my hands-on learning journey in mobile app development as 
 
 > ⚠️ Note: Emulator setup is currently in progress.  
 > UI development and core logic are completed. Testing and optimization will be done soon.
-
----
-
-
----
 
 ## ▶️ How to Run the Project
 
@@ -55,6 +44,7 @@ flutter run
 You can also run the app on web:
 
 flutter run -d chrome
+
 
 
 
